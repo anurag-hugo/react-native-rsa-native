@@ -40,14 +40,18 @@ class RNRSA: NSObject {
     
     // generate key with keysize - RSA - DER format
     @objc
-    func generateKeys(_ keySize: Int, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) -> Void {
-        let rsa_ec = RSAECNative()
+    func generateKeys(_ keyTag: String, keySize: Int, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) -> Void {
+        let rsa_ec = RSAECNative(keyTag: keyTag)
+        // with default alogo RSA
         let res = rsa_ec.generate(keySize: keySize)
         if(res ?? false){
             let pub = rsa_ec.encodedPublicKeyDER()
-            let prv = rsa_ec.encodedPrivateKeyRSA()
-            let keys = ["public": pub, "private": prv]
-            resolve(keys)
+            let priv = rsa_ec.encodedPrivateKeyDER()
+            let keys = ["public": pub, "private": priv, "test":"hello"],
+            let k = ["test":"www"]
+            print("Hello Swift")
+            print(keys)
+            resolve(k)
             return
         }
         resolve(false)

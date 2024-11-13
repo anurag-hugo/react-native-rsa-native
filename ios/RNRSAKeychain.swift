@@ -55,8 +55,12 @@ class RNRSAKeychain: NSObject {
         let res = rsa_ec.generate(keySize: keySize)
         if(res ?? false){
             let pub = rsa_ec.encodedPublicKeyDER()
-            let keys = ["public": pub]
-            resolve(keys)
+            let priv = rsa_ec.encodedPrivateKeyDER()
+            let keys = ["public": pub, "private": priv, "test":"hello"],
+            let k = ["test":"www"]
+            print("Hello Swift")
+            print(keys)
+            resolve(k)
             return
         }
         resolve(false)
